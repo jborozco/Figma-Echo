@@ -1,0 +1,47 @@
+<h1>Echo AI</h1>
+<form id="pluginForm">
+  <fieldset>
+    <legend>What if you said...</legend>
+    <p>
+      <input type="textarea" id="promptedText" name="promptedText" value="this is the new text">
+    </p>
+
+  </fieldset>
+  <button id="generate">Generate</button>
+  <button id="cancel">Cancel</button>
+</form>
+
+<script>
+
+  document.getElementById('generate').onclick = (event) => {
+
+
+    //Get the form
+    let pluginForm = document.querySelector('#pluginForm')
+
+    //Get field data from the form
+    let pluginFormData = new FormData(pluginForm)
+
+
+    //Create an object and populate it with form data
+
+    let formDataObj = {}
+
+    for (let [key, value] of pluginFormData) {
+      formDataObj[key] = value
+    }
+
+    parent.postMessage({ pluginMessage: { type: 'actionGenerate', formDataObj } }, '*')
+  }
+
+
+
+  document.getElementById('cancel').onclick = (event) => {
+    parent.postMessage({ pluginMessage: { type: 'actionExit' } }, '*')
+  }
+
+
+
+
+
+</script>
